@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <title>Meridian — Pre-Alpha Demo</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="The Guild, in first person, in WW1. A living town with a king, a school and six trades — and an air war above it.">
+<meta name="description" content="The Guild, in first person, in WW1. A living town with a king, six trades and the guilds that rank them — and an air war above it.">
 <style>
   :root { color-scheme: light dark;
     --ink:#1b1b1e; --dim:#5f5f6b; --line:#dcdce4; --bg:#faf9f6; --card:#fff; --accent:#9e1720; --blue:#22409e; }
@@ -67,6 +67,10 @@
   ul { padding-left:20px; } li { margin:5px 0; }
   .tier { display:inline-block; font-size:11px; color:var(--dim); border:1px solid var(--line); border-radius:20px; padding:0 7px; }
   footer { color:var(--dim); font-size:13px; margin-top:56px; border-top:1px solid var(--line); padding-top:20px; }
+
+.legend{border-left:3px solid rgba(120,90,40,.55);background:rgba(255,250,235,.55);padding:.7rem 1rem;
+  margin:1.1rem 0;border-radius:0 6px 6px 0;font-size:.98rem;line-height:1.55}
+.legend em{color:#6b5220;font-style:italic}
 </style>
 
 <div class="wrap">
@@ -137,7 +141,7 @@ The planet is round. Nothing is hidden.</span></p>
 <div class="card">
   <h3 style="margin-top:0">What you can do in this build</h3>
   <p class="meta">Walk the town on foot. Get into anything — a car, the bus, an aeroplane nobody is flying (<kbd>F</kbd> to climb in and out,
-  <kbd>C</kbd> to walk to a door). Fly a scout yourself. Follow the fighting from a chase seat. Watch a nation feed itself, school its people,
+  <kbd>C</kbd> to walk to a door). Fly a scout yourself. Follow the fighting from a chase seat. Watch a nation feed itself, raise a boy from apprentice to master,
   build a bus in a factory and put an air force in the sky, and read why it did any of it.</p>
   <p class="meta">What you cannot do yet: play the economy as a settler with your own workers, or play with anyone else. Both are next.</p>
 </div>
@@ -147,7 +151,7 @@ report from you is worth more than a polite silence.</p>
 
 <h2>What you are looking at</h2>
 
-<p class="meta">Not a menu-driven tycoon. A nation with a king who can be killed, a school that promotes people, six trades that learn their
+<p class="meta">Not a menu-driven tycoon. A nation with a king who can be killed, guilds that rank a man by what he has actually done, six trades that learn their
 craft by doing it, farms that feed everyone, a mine that everything else waits on, and an air force that exists because the town built it.</p>
 
 <h3>The town</h3>
@@ -259,18 +263,27 @@ is shooting back. Two veterans against four novices: six wins in ten, with about
 <h2>The nation, and the man who runs it</h2>
 
 <p><strong>The head of state is a real person, not a menu.</strong> He eats the nation's grain, sleeps in a house, and has health like anybody
-else. He keeps hours: the morning at the capital's door where the day's decree is written, a round of the granary, the workshop and the field's
-gate, <strong>a speech in the square at noon</strong> that every free body within earshot walks over and stands through, and afternoon state
-visits to whatever has actually been built — the school, the laboratory, the bank, the hospital. He is driven there; the state car has a
-chauffeur who is also a person with a name.</p>
+else. He keeps hours: the decree at seven, written off the state of the nation as it actually is that morning; the capital's
+door open to anyone who turns up, until noon; <strong>a speech in the square at noon</strong> that the notables drop what they are doing and
+travel in for — officers, riggers, the constable, the banker — while the farmhands keep working, because somebody has to. Then state
+visits in the afternoon to whatever has actually been built: the guild hall, the laboratory, the bank, the hospital. He is driven. The
+chauffeur has a name, a house and an opinion.</p>
 
 <p><strong>And he can be killed.</strong> If the capital falls he dies, and the deputy — who has been kept at a standing cost in grain all along,
 because a spare head of state is not free — takes the office. With no deputy, the nation joins its conqueror. That is the war's actual objective:
 not territory, but the other nations' kings.</p>
 
-<p><strong>There is a school.</strong> Lessons run every day but the seventh once it is commissioned and a schoolmaster stands at the desk. A
-fitter with no work attends, is counted at the door, and after enough lessons is <strong>promoted to engineer</strong> — which changes what he
-wants, what he can build, and what the nation can attempt. The roll and every pupil's lesson count are public, like everything else.</p>
+<p><strong>Nobody goes to school. The trades keep guilds.</strong> There is no classroom, no register and no homework — a man earns his
+advancement doing the actual job. Ore hewn, miles walked, rows reaped, machines rigged, hours flown. The guild is where that turns into
+something he could not do yesterday: <strong>apprentice, journeyman, master</strong>, and each rank changes what he wants, what he can build and
+what the nation can attempt.</p>
+
+<p>What the guild is <em>allowed</em> to teach him is set by how far the nation has pushed <strong>the sciences</strong>. The laboratory is not
+scenery and it is not a bonus building — it is the ceiling on what anybody in the country can become. Fund it and your people get better.
+Ignore it and your best miner stays a very good miner for ever.</p>
+
+<p class="legend"><em>The legends say that once in a generation, a man surpasses his peers by a thousand years.</em><br>
+There is a rank above master. One man in the world holds it, he did not study his way there, and that is all you are getting.</p>
 
 <h2>Six trees, seventy-seven things to learn</h2>
 
@@ -281,7 +294,7 @@ great deal of ore learns to read a vein; a carrier who has walked a thousand mil
   <tr><th>Trade</th><th></th><th>A few of them</th></tr>
   <tr><td><strong>Pilots</strong></td><td class="meta">20</td>
       <td class="meta">the Quick Eye · the Hawk's Eye · Deflection Shooting · Harmonised Guns · the Ace's Turn · the Bounce · the Immelmann · the Old Head</td></tr>
-  <tr><td><strong>Careers</strong><br><span class="meta">constables, nurses, surgeons, schoolmasters, bankers, scientists</span></td><td class="meta">21</td>
+  <tr><td><strong>Careers</strong><br><span class="meta">constables, nurses, surgeons, guild masters, bankers, scientists</span></td><td class="meta">21</td>
       <td class="meta">the Long Beat · Watchful · the Sergeant · the Good Nurse · the Surgeon · the Clear Voice · the Inspiring Master · Method · Instruments · Theory · Good Terms · the War Loan</td></tr>
   <tr><td><strong>Farmers</strong></td><td class="meta">9</td>
       <td class="meta">the Strong Back · Good Seed · Dry Farming · Even Rows · the Sharp Sickle · the Master Grower · Rotation</td></tr>
@@ -321,7 +334,7 @@ comes home holed in half of them.</p>
 
 <h3>And eighteen trades in the town</h3>
 <p class="meta">Baker · Banker · Brewer · Brickmaker · Carrier · Chauffeur · Constable · Driver · Heir · King · Lorry driver · Miner ·
-Orderly · Pilot · Rigger · Schoolmaster · Scientist · Steelmaker</p>
+Orderly · Pilot · Rigger · Guild Master · Scientist · Steelmaker</p>
 
 <h2>How it thinks</h2>
 <ul>
