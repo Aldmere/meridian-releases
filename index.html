@@ -2,60 +2,348 @@
 <meta charset="utf-8">
 <title>Meridian — Pre-Alpha Demo</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="The Guild, in first person, in WW1. A living town with a king, a school and six trades — and an air war above it.">
 <style>
-  :root { color-scheme: light dark; --ink:#1b1b1e; --dim:#5b5b66; --line:#d8d8e0; --bg:#faf9f6; --card:#fff; --accent:#9e1720; }
-  @media (prefers-color-scheme: dark){ :root{ --ink:#eceaf2; --dim:#9c9cab; --line:#2c2c36; --bg:#131318; --card:#1b1b22; --accent:#c8323d; } }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
-  h1 { font-size: 42px; margin: 0 0 4px; letter-spacing: -0.5px; }
-  .sub { color: var(--dim); margin: 0 0 36px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:24px; margin: 0 0 24px; }
-  a.get { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; padding:14px 26px; border-radius:8px; font-weight:600; }
-  a.get:hover { filter: brightness(1.08); }
-  .meta { color:var(--dim); font-size:14px; margin-top:12px; }
-  h2 { font-size:19px; margin:32px 0 8px; }
-  ul { padding-left: 20px; } li { margin: 4px 0; }
-  kbd { background:var(--bg); border:1px solid var(--line); border-bottom-width:2px; border-radius:4px; padding:1px 6px; font:13px ui-monospace,Menlo,Consolas,monospace; }
-  .warn { border-left:3px solid var(--accent); padding-left:14px; color:var(--dim); }
-  footer { color:var(--dim); font-size:13px; margin-top:48px; border-top:1px solid var(--line); padding-top:18px; }
+  :root { color-scheme: light dark;
+    --ink:#1b1b1e; --dim:#5f5f6b; --line:#dcdce4; --bg:#faf9f6; --card:#fff; --accent:#9e1720; --blue:#22409e; }
+  @media (prefers-color-scheme: dark){ :root{ --ink:#eceaf2; --dim:#9c9cab; --line:#2b2b35; --bg:#121217; --card:#1a1a21; --accent:#c8323d; --blue:#5c7ae0; } }
+  * { box-sizing:border-box; }
+  /* A SKY, because a page about aeroplanes should not be grey (Tyrael: "the backgound needs to be a blue sky with some white coulds").
+     Painted in CSS rather than loaded as an image: it costs nothing, it never fails to download, and it scales to any window.
+     Fixed, so the page scrolls and the sky does not — you are looking THROUGH it. */
+  body { margin:0; color:var(--ink); min-height:100vh;
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      /* the clouds: soft ellipses, a few of them, drifting scale */
+      radial-gradient(58% 34% at 12% 16%, rgba(255,255,255,.92) 0%, rgba(255,255,255,.55) 42%, rgba(255,255,255,0) 72%),
+      radial-gradient(46% 26% at 30% 10%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(52% 30% at 78% 22%, rgba(255,255,255,.88) 0%, rgba(255,255,255,.45) 45%, rgba(255,255,255,0) 74%),
+      radial-gradient(40% 22% at 62% 34%, rgba(255,255,255,.70) 0%, rgba(255,255,255,0) 72%),
+      radial-gradient(64% 30% at 88% 52%, rgba(255,255,255,.62) 0%, rgba(255,255,255,0) 76%),
+      radial-gradient(48% 24% at 22% 62%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 74%),
+      /* and the sky itself, deeper overhead and paler toward the horizon, as it is */
+      linear-gradient(180deg, #4b8fd6 0%, #74b0e4 34%, #a9d0ef 66%, #d9e9f6 100%);
+    background-attachment: fixed; background-repeat: no-repeat; background-size: cover; }
+  @media (prefers-color-scheme: dark){
+    body { background:
+      radial-gradient(58% 34% at 12% 16%, rgba(190,205,230,.20) 0%, rgba(190,205,230,0) 72%),
+      radial-gradient(52% 30% at 78% 22%, rgba(190,205,230,.16) 0%, rgba(190,205,230,0) 74%),
+      radial-gradient(64% 30% at 88% 52%, rgba(190,205,230,.12) 0%, rgba(190,205,230,0) 76%),
+      linear-gradient(180deg, #0a1020 0%, #142138 40%, #24354f 74%, #3b4f6b 100%);
+      background-attachment: fixed; background-repeat: no-repeat; background-size: cover; } }
+  .wrap { max-width:900px; margin:0 auto; padding:34px 22px 90px; }
+  /* Everything readable sits on its own surface. A sky is a lovely background and a terrible thing to read body text off. */
+  .sheet { background:rgba(255,255,255,.93); border:1px solid rgba(255,255,255,.6); border-radius:16px;
+           padding:34px 34px 44px; box-shadow:0 8px 40px rgba(16,40,74,.16); backdrop-filter:blur(2px); }
+  @media (prefers-color-scheme: dark){ .sheet { background:rgba(18,20,28,.90); border-color:rgba(120,140,180,.18); box-shadow:0 8px 40px rgba(0,0,0,.5); } }
+  .hero { text-align:center; padding:26px 10px 34px; color:#fff; text-shadow:0 2px 18px rgba(10,30,60,.55); }
+  .hero h1 { font-size:60px; margin:0; letter-spacing:-1.5px; }
+  .hero .sub { color:rgba(255,255,255,.94); }
+  h1 { font-size:46px; margin:0 0 2px; letter-spacing:-1px; }
+  .sub { color:var(--dim); margin:0 0 34px; font-size:18px; }
+  h2 { font-size:22px; margin:46px 0 12px; letter-spacing:-0.3px; }
+  h3 { font-size:15px; margin:26px 0 6px; color:var(--dim); text-transform:uppercase; letter-spacing:0.6px; }
+  p { margin:0 0 14px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:24px; margin:0 0 18px; }
+  a.get { display:inline-block; background:var(--accent); color:#fff; text-decoration:none;
+    padding:14px 26px; border-radius:8px; font-weight:600; margin:0 8px 8px 0; }
+  a.get.alt { background:transparent; color:var(--ink); border:1px solid var(--line); }
+  a.get:hover { filter:brightness(1.1); }
+  .meta { color:var(--dim); font-size:14px; }
+  .warn { border-left:3px solid var(--accent); padding-left:15px; color:var(--dim); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+  figure { margin:0; }
+  figure img { width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px; border:1px solid var(--line); display:block; background:var(--card); }
+  figcaption { color:var(--dim); font-size:13px; margin-top:5px; }
+  table { border-collapse:collapse; width:100%; font-size:14px; }
+  th,td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--dim); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.5px; }
+  kbd { background:var(--bg); border:1px solid var(--line); border-bottom-width:2px; border-radius:4px;
+    padding:1px 6px; font:13px ui-monospace,Menlo,Consolas,monospace; }
+  code { font:13px ui-monospace,Menlo,Consolas,monospace; background:var(--bg); padding:1px 5px; border-radius:4px; word-break:break-all; }
+  ul { padding-left:20px; } li { margin:5px 0; }
+  .tier { display:inline-block; font-size:11px; color:var(--dim); border:1px solid var(--line); border-radius:20px; padding:0 7px; }
+  footer { color:var(--dim); font-size:13px; margin-top:56px; border-top:1px solid var(--line); padding-top:20px; }
 </style>
 
 <div class="wrap">
-  <h1>Meridian</h1>
-  <p class="sub">A war of aeroplanes, and the towns that build them. Pre-alpha demo.</p>
 
-  <div class="card">
-    <a class="get" href="https://github.com/Aldmere/meridian-releases/releases/latest/download/Meridian-Pre-Alpha-Demo.exe">Download for Windows</a>
-    <div class="meta">One file, about 110&nbsp;MB. Double-click it and it unpacks and starts.<br>
-      This link always gives you the newest build — <a href="https://github.com/Aldmere/meridian-releases/releases">all releases</a>.</div>
-  </div>
+<div class="hero">
+<h1>Meridian</h1>
+<p class="sub"><strong>The Guild, in first person, in the First World War.</strong><br>
+<span style="font-size:15px">A town that runs whether you are watching or not — and an air war above it. Everyone has a name.
+The planet is round. Nothing is hidden.</span></p>
+</div>
+</div>
 
-  <p class="warn">It is pre-alpha, which means exactly what it sounds like. Things will be missing, wrong, or plainly broken. That is what the
-  demo is for, and a report from you is worth more than a polite silence.</p>
+<div class="sheet">
 
-  <h2>What you are looking at</h2>
-  <ul>
-    <li>A town that genuinely simulates — farms, a mine, a mill, a bus with a driver who walks out to it.</li>
-    <li>An aerodrome, and pilots who fight over it. They see, plan, shoot and are frightened, and an ace does all four better.</li>
-    <li>Nothing is hidden: every person and machine can tell you what it is doing and why.</li>
-  </ul>
+<div class="card">
+  <a class="get" href="https://github.com/Aldmere/meridian-releases/releases/latest/download/Meridian-Pre-Alpha-Demo.zip">Download the zip</a>
+  <a class="get alt" href="https://github.com/Aldmere/meridian-releases/releases/latest/download/Meridian-Pre-Alpha-Demo.exe">or the single .exe</a>
+  <p class="meta" style="margin-top:12px">Windows 10 or 11, 64-bit. About 110&nbsp;MB. No installer, no account, no launcher.<br>
+  These links always give you the newest build — <a href="https://github.com/Aldmere/meridian-releases/releases">every release</a>.</p>
+</div>
+</div>
 
-  <h2>Keys</h2>
-  <ul>
-    <li><kbd>X</kbd> follow a machine &nbsp; <kbd>Tab</kbd> change machine &nbsp; right-drag to look round</li>
-    <li><kbd>H</kbd> the roll — who is flying, and how many they have shot down</li>
-    <li><kbd>F8</kbd> report a problem — takes a picture and gathers the rest for you</li>
-    <li><kbd>Esc</kbd> the menu</li>
-  </ul>
+<div class="card">
+  <h3 style="margin-top:0">Is this safe?</h3>
+  <p class="meta">Fair question, and the honest answer is worth more than a reassuring one.</p>
+  <p class="meta"><strong>The zip is the safer download</strong> — unzip it and run <code>Meridian.exe</code> inside. The single .exe is the same
+  build wrapped in a self-extractor for convenience; because it is not code-signed, <strong>Windows SmartScreen will show a blue warning</strong>
+  for it (More info → Run anyway). That warning is not evidence of anything except that a small studio has not bought a £300-a-year certificate
+  yet. We would rather tell you that than have you discover it and assume the worst.</p>
+  <p class="meta">Every release publishes <a href="https://github.com/Aldmere/meridian-releases/releases">SHA-256 checksums</a> so you can prove
+  the file is the one we built. In PowerShell: <code>Get-FileHash .\Meridian-Pre-Alpha-Demo.zip</code></p>
+  <p class="meta">The game makes exactly one network request, at startup, to read a small public file and see whether a newer demo exists.
+  Nothing else is sent, ever, and nothing at all is sent unless you press the report key yourself.</p>
+</div>
+</div>
 
-  <h2>If something goes wrong</h2>
-  <p>Press <kbd>F8</kbd> where it happened. It photographs what is on screen, asks what went wrong, and packages the picture, your note, the log
-  and a census of the whole world into one file. That census is the useful part: it says where everything is, what everyone is doing, and how long
-  since anything last moved.</p>
+<div class="card">
+  <h3 style="margin-top:0">What you can do in this build</h3>
+  <p class="meta">Walk the town on foot. Get into anything — a car, the bus, an aeroplane nobody is flying (<kbd>F</kbd> to climb in and out,
+  <kbd>C</kbd> to walk to a door). Fly a scout yourself. Follow the fighting from a chase seat. Watch a nation feed itself, school its people,
+  build a bus in a factory and put an air force in the sky, and read why it did any of it.</p>
+  <p class="meta">What you cannot do yet: play the economy as a settler with your own workers, or play with anyone else. Both are next.</p>
+</div>
+</div>
 
-  <footer>
-    Made by Aldmere. Windows 10 or 11, 64-bit.<br>
-    No account, no telemetry, nothing sent anywhere unless you press the button.
-  </footer>
+<p class="warn">It is <strong>pre-alpha</strong> and means it. Things are missing, wrong or plainly broken. That is what the demo is for, and a
+report from you is worth more than a polite silence.</p>
+
+<h2>What you are looking at</h2>
+
+<p class="meta">Not a menu-driven tycoon. A nation with a king who can be killed, a school that promotes people, six trades that learn their
+craft by doing it, farms that feed everyone, a mine that everything else waits on, and an air force that exists because the town built it.</p>
+
+<h3>The town</h3>
+<div class="grid">
+  <figure><img src="shots/01_the_town.png" alt="The town from above"><figcaption>A town that builds itself, in the order it can afford to</figcaption></figure>
+  <figure><img src="shots/03_the_town_wide.png" alt="The town, wide"><figcaption>Roads are planned in blocks and filled before new land is opened</figcaption></figure>
+  <figure><img src="shots/04_the_farm.png" alt="A farm"><figcaption>The farms — where all of it starts, because people eat</figcaption></figure>
+  <figure><img src="shots/06_the_granary.png" alt="The granary"><figcaption>The granary. Grain is the currency everything else waits on</figcaption></figure>
+  <figure><img src="shots/07_the_mill.png" alt="The mill"><figcaption>The mill</figcaption></figure>
+  <figure><img src="shots/08_the_mine.png" alt="The mine"><figcaption>The pithead. No ore, no furnace, no aeroplanes</figcaption></figure>
+  <figure><img src="shots/12_the_motor_works.png" alt="The motor works"><figcaption>The motor works, where the bus is actually built</figcaption></figure>
+  <figure><img src="shots/17_the_people.png" alt="People"><figcaption>Everyone is somebody, with a trade and a reason for being there</figcaption></figure>
+  <figure><img src="shots/18_at_work.png" alt="At work"><figcaption>Nobody is scenery</figcaption></figure>
+</div>
+</div>
+
+<h3>The roads and the bus</h3>
+<div class="grid">
+  <figure><img src="shots/14_the_bus.png" alt="The bus"><figcaption>The omnibus. Its driver walks out, opens the cab and climbs in</figcaption></figure>
+  <figure><img src="shots/15_the_bus_close.png" alt="The bus, close"><figcaption>Six seats, and passengers walk down the aisle to reach them</figcaption></figure>
+  <figure><img src="shots/16_the_bus_running.png" alt="The bus running"><figcaption>Halting on the road at its stop, as a bus does</figcaption></figure>
+  <figure><img src="shots/19_the_roads.png" alt="The roads"><figcaption>Two-way traffic, junction priority, and nobody drives on the verge</figcaption></figure>
+  <figure><img src="shots/20_a_carter.png" alt="A carter"><figcaption>A carter, taking the shortest road that is actually there</figcaption></figure>
+</div>
+</div>
+
+<h3>The aerodrome</h3>
+<div class="grid">
+  <figure><img src="shots/21_the_aerodrome.png" alt="The aerodrome"><figcaption>The field</figcaption></figure>
+  <figure><img src="shots/31_the_field.png" alt="The field from above"><figcaption>Stands, taxiways and the runway</figcaption></figure>
+  <figure><img src="shots/32_on_the_stand.png" alt="On the stand"><figcaption>On the stand, belted and waiting</figcaption></figure>
+  <figure><img src="shots/33_taxiing.png" alt="Taxiing"><figcaption>Taxiing out — on the taxiway, not across the grass</figcaption></figure>
+  <figure><img src="shots/34_lining_up.png" alt="Lining up"><figcaption>Lining up</figcaption></figure>
+  <figure><img src="shots/35_the_takeoff_roll.png" alt="The takeoff roll"><figcaption>The takeoff roll</figcaption></figure>
+  <figure><img src="shots/36_climbing_away.png" alt="Climbing away"><figcaption>Climbing away</figcaption></figure>
+  <figure><img src="shots/37_downwind.png" alt="Downwind"><figcaption>Downwind, flying a real circuit</figcaption></figure>
+  <figure><img src="shots/38_on_final.png" alt="On final"><figcaption>On final</figcaption></figure>
+</div>
+</div>
+
+<h3>The war</h3>
+<div class="grid">
+  <figure><img src="shots/22_the_machines.png" alt="Two machines"><figcaption>Two nations. You can tell at a glance, which is the point</figcaption></figure>
+  <figure><img src="shots/23_a_scout.png" alt="A scout"><figcaption>A scout: wood, wire and fabric, and it behaves like it</figcaption></figure>
+  <figure><img src="shots/25_his_own_colours.png" alt="An ace in his own colours"><figcaption>Sixteen victories, and the machine is his</figcaption></figure>
+  <figure><img src="shots/26_going_down.png" alt="Going down"><figcaption>Going down. Fire was what they feared most</figcaption></figure>
+  <figure><img src="shots/27_the_end_of_it.png" alt="The end of it"><figcaption>Contact is fatal, at any speed, at any height</figcaption></figure>
+  <figure><img src="shots/28_dawn.png" alt="Dawn"><figcaption>Dawn. The sun moves by real spherical geometry</figcaption></figure>
+  <figure><img src="shots/29_evening.png" alt="Evening"><figcaption>Evening over the same ground</figcaption></figure>
+</div>
+</div>
+
+<h2>Land, work and scrip</h2>
+
+<p>The town is not the only economy. <strong>Free settlers hold their own land</strong> — they build a house of their own, put in plots, farm
+them, and eat their own grain first. What is over the food reserve they <strong>sell to the nation in lots for scrip</strong>, and when the scrip
+is enough they buy the next square of land and do it again. The nation buys, but only above its own meal reserve: it will refuse you if its bins
+are low, and say so.</p>
+
+<p>Their wealth is counted honestly — grain and timber at the nation's posted rates, plus scrip, plus land at its deed price — and posted once a
+day under their own name. Every purchase, every sale, every plot is a line you can read.</p>
+
+<p class="meta"><strong>In this demo you watch that happen and you can walk through it.</strong> Being one of them — hiring your own workers,
+running your own books against theirs — is the next thing, and it is what the whole economy was built to support.</p>
+
+<h2>Where this comes from</h2>
+
+<p><strong>The Guild, in first person, in the First World War.</strong> That is the whole of it in ten words. What was always good about The Guild was that the world did
+not wait for you: people had trades and families and debts, the town had an economy that ran whether you were looking at it or not, and you were
+one person inside it rather than a cursor above it. That is the part being taken seriously here. Everyone in Meridian has a name, a trade, a
+skill sheet they are filling in by doing the work, somewhere to sleep and a reason to be where they are.</p>
+
+<p>The other half is the air war as it actually was — the thing the Red Baron documentaries get right and most games get wrong. Not aeroplanes
+with hit points, but wood and wire and fabric that comes apart if you pull too hard; guns that miss constantly; and men who mostly died without
+ever seeing what killed them.</p>
+
+<p><strong>And you make the difference, in the air and on the ground.</strong> You can take a machine and fly it. You can walk the town, ride the
+bus, stand in the square while the president speaks. Neither half is a menu you visit — the aerodrome exists because the town built it, and the
+town keeps going because the aerodrome holds.</p>
+
+<h2>The planet is round</h2>
+
+<p>Not a skybox with a sun painted on it. There is a sphere with a radius and a latitude, and everything follows from it:</p>
+
+<ul>
+  <li><strong>The sun is solved, not animated.</strong> Hour angle at 15° per hour — which <em>is</em> the planet turning — declination from the
+  day number by Cooper's equation, and elevation from those two and your latitude. So the seasons are real and latitude genuinely matters: at
+  Meridian's home latitude the sun climbs steeply and the days are near enough twelve hours all year.</li>
+  <li><strong>The stars wheel about the celestial pole</strong>, and the pole sits at an altitude equal to your latitude — which is a fact of a
+  round planet rather than a decoration. Some two thousand of them, turning with the same rotation as the sun, seen from the other side.</li>
+  <li><strong>The ground curves away.</strong> The far horizon drops by d²/2R against a 6,371&nbsp;km radius — a hundred and twenty-six metres at
+  forty kilometres — so the world falls away from you as it should, and haze takes what the curvature leaves.</li>
+  <li><strong>Night is not black.</strong> Moonlight over a blue-grey ambient, because a night nobody can see in is a night nobody plays through.</li>
+</ul>
+
+<h2>You fly with them, and against them</h2>
+
+<p>The pilots are not targets that move. They see, and how far depends on their eyes — a veteran picks a machine out at a kilometre where a boy
+does not find it until 340&nbsp;m. They <strong>refuse a head-on merge</strong> and work round to your blind side with height in hand. They fly in
+pairs, and the wingman's whole job is his leader's tail. They <strong>check behind themselves</strong> — badly, on purpose, because dead astern is
+a blind spot in an aeroplane with a fuselage and an engine's smoke in the way, which is why four in five men shot down in that war never saw it.</p>
+
+<p>Get behind one and he will do something about it: loop over the top so you go underneath, Split-S away if he has the height to spend, haul into
+an Immelmann if he has the speed — and which of those he picks depends on the energy he has at that moment, not on a difficulty setting.</p>
+
+<p><strong>And none of it is cheating.</strong> Skill changes what goes <em>into</em> the aeroplane — how fast his hands are, how wide his gun
+scatters, how far he can see, how hard he dares pull before a spar lets go. No pilot in this game rolls a die to decide whether he hits you. When
+a novice misses, it is because his nose was physically late and his aim was short.</p>
+
+<p class="meta">One against one, a full-sheet veteran beats a novice six times out of six — and comes home holed in half of them, because the boy
+is shooting back. Two veterans against four novices: six wins in ten, with about one of the two coming home.</p>
+
+<h2>The nation, and the man who runs it</h2>
+
+<p><strong>The head of state is a real person, not a menu.</strong> He eats the nation's grain, sleeps in a house, and has health like anybody
+else. He keeps hours: the morning at the capital's door where the day's decree is written, a round of the granary, the workshop and the field's
+gate, <strong>a speech in the square at noon</strong> that every free body within earshot walks over and stands through, and afternoon state
+visits to whatever has actually been built — the school, the laboratory, the bank, the hospital. He is driven there; the state car has a
+chauffeur who is also a person with a name.</p>
+
+<p><strong>And he can be killed.</strong> If the capital falls he dies, and the deputy — who has been kept at a standing cost in grain all along,
+because a spare head of state is not free — takes the office. With no deputy, the nation joins its conqueror. That is the war's actual objective:
+not territory, but the other nations' kings.</p>
+
+<p><strong>There is a school.</strong> Lessons run every day but the seventh once it is commissioned and a schoolmaster stands at the desk. A
+fitter with no work attends, is counted at the door, and after enough lessons is <strong>promoted to engineer</strong> — which changes what he
+wants, what he can build, and what the nation can attempt. The roll and every pupil's lesson count are public, like everything else.</p>
+
+<h2>Six trees, seventy-seven things to learn</h2>
+
+<p>Not one skill tree for the player. <strong>Every trade has its own</strong>, and they are earned by doing the work — a miner who has hewn a
+great deal of ore learns to read a vein; a carrier who has walked a thousand miles learns to carry more of it.</p>
+
+<table>
+  <tr><th>Trade</th><th></th><th>A few of them</th></tr>
+  <tr><td><strong>Pilots</strong></td><td class="meta">20</td>
+      <td class="meta">the Quick Eye · the Hawk's Eye · Deflection Shooting · Harmonised Guns · the Ace's Turn · the Bounce · the Immelmann · the Old Head</td></tr>
+  <tr><td><strong>Careers</strong><br><span class="meta">constables, nurses, surgeons, schoolmasters, bankers, scientists</span></td><td class="meta">21</td>
+      <td class="meta">the Long Beat · Watchful · the Sergeant · the Good Nurse · the Surgeon · the Clear Voice · the Inspiring Master · Method · Instruments · Theory · Good Terms · the War Loan</td></tr>
+  <tr><td><strong>Farmers</strong></td><td class="meta">9</td>
+      <td class="meta">the Strong Back · Good Seed · Dry Farming · Even Rows · the Sharp Sickle · the Master Grower · Rotation</td></tr>
+  <tr><td><strong>Miners</strong></td><td class="meta">9</td>
+      <td class="meta">the Sure Foot · an Eye for Ore · the Deep Cut · the Vein Reader · the Master Hewer · the Pit Captain · the Mother Lode</td></tr>
+  <tr><td><strong>Carriers</strong></td><td class="meta">9</td>
+      <td class="meta">the Long Stride · Strong Shoulders · the Porter · the Runner · the Drayman · the Master of Works · the Quartermaster</td></tr>
+  <tr><td><strong>Riggers</strong></td><td class="meta">9</td>
+      <td class="meta">the True Eye · Two Belts · the Big Can · the Joiner · the Foreman · the Wall Master · the Salvage Master</td></tr>
+</table>
+
+<h2>What a pilot learns</h2>
+<p>Pilots are not tiers or stars. They carry a sheet of things they have actually been taught, earned by flying — and every one of them changes
+an <em>input</em> rather than a dice roll. A novice misses because his nose is physically late and his lead point is short, not because a number
+said so.</p>
+
+<table>
+  <tr><th>Discipline</th><th>What it is</th><th>Skills</th></tr>
+  <tr><td><strong>Eye</strong></td><td>Seeing first, which is what actually made an ace</td>
+      <td>the Quick Eye <span class="tier">1</span> · the Hawk's Eye <span class="tier">2</span> · Formation Flying <span class="tier">2</span> ·
+          the Bounce <span class="tier">3</span> · Night Flying <span class="tier">3</span></td></tr>
+  <tr><td><strong>Gunnery</strong></td><td>Reach, and a cone tight enough for the reach to be worth having</td>
+      <td>the Steady Hand <span class="tier">1</span> · Deflection Shooting <span class="tier">2</span> ·
+          Harmonised Guns <span class="tier">2</span> · the Marksman <span class="tier">3</span></td></tr>
+  <tr><td><strong>Handling</strong></td><td>What he can ask of the aeroplane before a spar lets go</td>
+      <td>the Inside Loop <span class="tier">1</span> · the Confident Bank <span class="tier">1</span> · the Tight Turn <span class="tier">2</span> ·
+          Energy in the Climb <span class="tier">2</span> · the Split-S <span class="tier">2</span> ·
+          the Ace's Turn <span class="tier">3</span> · the Immelmann <span class="tier">3</span></td></tr>
+  <tr><td><strong>Nerve</strong></td><td>Holding fire, and knowing when a fight has gone bad</td>
+      <td>Close In <span class="tier">2</span> · the Defensive Spiral <span class="tier">2</span> ·
+          the Cool Head <span class="tier">3</span> · the Old Head <span class="tier">3</span></td></tr>
+</table>
+
+<p class="meta" style="margin-top:14px">A veteran with the full sheet fires at 520&nbsp;m through a one-degree cone; a novice fires at 120&nbsp;m
+through five. He sees a machine at a kilometre where the boy sees it at 340&nbsp;m. One against one, the veteran wins six times out of six — and
+comes home holed in half of them.</p>
+
+<h3>And eighteen trades in the town</h3>
+<p class="meta">Baker · Banker · Brewer · Brickmaker · Carrier · Chauffeur · Constable · Driver · Heir · King · Lorry driver · Miner ·
+Orderly · Pilot · Rigger · Schoolmaster · Scientist · Steelmaker</p>
+
+<h2>How it thinks</h2>
+<ul>
+  <li><strong>Nothing is hidden.</strong> Every person, machine and building can tell you what it is doing and why it decided that. No secret rolls.</li>
+  <li><strong>Nothing appears from nowhere.</strong> A bus is built on a factory floor and drives out of it. Aeroplanes come out of hangars.</li>
+  <li><strong>Nothing overlaps anything.</strong> Two things touching is a failure — and now a fatal one.</li>
+  <li><strong>Skill shapes inputs, never outcomes.</strong> A better pilot has quicker hands and better eyes, not better luck.</li>
+</ul>
+
+<h2>Keys</h2>
+<table>
+  <tr><td><kbd>X</kbd></td><td>Follow a machine — <kbd>Tab</kbd> to change, right-drag to look round, <kbd>V</kbd> to recentre</td></tr>
+  <tr><td><kbd>H</kbd></td><td>The roll — who is flying, and how many they have shot down</td></tr>
+  <tr><td><kbd>F8</kbd></td><td>Report a problem</td></tr>
+  <tr><td><kbd>Esc</kbd></td><td>The menu</td></tr>
+</table>
+
+<h2>If something goes wrong</h2>
+<p>Press <kbd>F8</kbd> where it happened. It photographs what is on screen <em>before</em> drawing itself, asks what went wrong, and packages the
+picture, your note, the log and a census of the whole world into one file. That census is the useful part: where everything is, what everyone is
+doing, how fast, and <strong>how long since anything last moved</strong> — which is how a stuck thing gets found.</p>
+<p class="meta">Nothing is sent anywhere. It writes one zip and opens the folder, and you decide what to do with it.</p>
+
+<h2>Where this is going</h2>
+<table>
+  <tr><th>Next</th><th>Where it stands</th></tr>
+  <tr><td><strong>Multiplayer</strong> — one player hosts and simulates everything, the others join. One world: the same farms, the same ore, the same bus.</td>
+      <td>Designed and begun. The groundwork that keeps a client from quietly running a second copy of the world is in and enforced; the networking is not.</td></tr>
+  <tr><td><strong>Play as a settler</strong> — your own land, your own workers, your own books, selling to the state alongside everyone else</td>
+      <td>The economy it runs on is built and running; the player's side of it is not</td></tr>
+  <tr><td><strong>A tutorial</strong></td><td>Not started</td></tr>
+  <tr><td><strong>The rest of the manoeuvres</strong> — Side-Slip, Flat Scissors, Cuban-8, and for later aircraft the Lufbery Circle, Boom-and-Zoom, the yo-yos</td>
+      <td>Four of nine flown</td></tr>
+  <tr><td><strong>The Warden</strong> — a heavy fighter with a rear gunner</td><td>Not started; turrets do not exist yet</td></tr>
+  <tr><td><strong>A second aerodrome</strong>, hangars built on demand, rescue for downed pilots</td><td>Planned</td></tr>
+  <tr><td><strong>Interiors</strong> — the capital, the air-force terminal, a ready room</td><td>Planned</td></tr>
+</table>
+
+<h2>Known to be wrong, today</h2>
+<ul>
+  <li><strong>Multiplayer is not in this build.</strong> The button says so.</li>
+  <li>About one collision a fight is still an aeroplane flying into the man it was shooting at.</li>
+  <li>The demo opens as a <em>town</em>. The air war currently runs from the test harness rather than a menu button.</li>
+  <li>Some scene references are unassigned, so a few things explain why they cannot happen rather than happening.</li>
+  <li>Almost nobody has played this yet. You are close to first.</li>
+</ul>
+
+<footer>
+  Made by Aldmere. Built in Unity. Flight by JSBSim.<br>
+  No telemetry, no account, no launcher. One request at startup to check for a newer demo, and nothing else.
+</footer>
+
+</div>
 </div>
