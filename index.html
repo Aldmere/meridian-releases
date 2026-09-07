@@ -97,6 +97,39 @@ The planet is round. Nothing is hidden.</span></p>
   the file is the one we built. In PowerShell: <code>Get-FileHash .\Meridian-Pre-Alpha-Demo.zip</code></p>
   <p class="meta">The game makes exactly one network request, at startup, to read a small public file and see whether a newer demo exists.
   Nothing else is sent, ever, and nothing at all is sent unless you press the report key yourself.</p>
+
+  <details style="margin-top:14px">
+    <summary class="meta" style="cursor:pointer"><strong>Still not happy? Run it in a sandbox instead — it takes five minutes</strong></summary>
+    <div class="meta" style="margin-top:10px">
+      <p>This is the right instinct for <em>any</em> unsigned download, not just ours, and we would rather you played it safely than not at all.</p>
+
+      <p><strong>Windows Sandbox — the easiest, and free if you have Windows Pro or Enterprise.</strong> A throwaway Windows that forgets
+      everything when you close it.</p>
+      <ol>
+        <li>Search <em>Turn Windows features on or off</em>, tick <strong>Windows Sandbox</strong>, restart.</li>
+        <li>Open <strong>Windows Sandbox</strong> from the Start menu.</li>
+        <li>Copy the Meridian zip into the sandbox window and unzip it there.</li>
+        <li>Run <code>Meridian.exe</code>. Close the sandbox when you are done and every trace of it is gone.</li>
+      </ol>
+      <p class="meta">Graphics inside the sandbox are limited, so the game will look rougher and run slower than it does natively. It is for
+      satisfying yourself that it is harmless, not for judging how it plays.</p>
+
+      <p><strong>A full virtual machine — better graphics, a bit more work.</strong> Free either way:</p>
+      <ol>
+        <li>Install <a href="https://www.virtualbox.org/">VirtualBox</a> (free) or VMware Workstation Player.</li>
+        <li>Get a free <a href="https://developer.microsoft.com/en-us/windows/downloads/virtual-machines/">Windows 11 evaluation VM</a> from
+        Microsoft — it expires after 90 days, which is plenty.</li>
+        <li>Give it 8&nbsp;GB of memory and enable 3D acceleration in the VM's display settings, or the game will crawl.</li>
+        <li><strong>Take a snapshot before you run anything.</strong> That is the whole point: if you dislike what you see, roll back and it never
+        happened.</li>
+        <li>Drag the zip in, unzip, run.</li>
+      </ol>
+
+      <p><strong>Or check it without running it at all.</strong> Upload the file to
+      <a href="https://www.virustotal.com/">VirusTotal</a> — it will be scanned by about seventy engines in a minute. A couple of them flag most
+      unsigned self-extracting archives on principle; what you are looking for is whether anything reputable names an actual piece of malware.</p>
+    </div>
+  </details>
 </div>
 </div>
 
