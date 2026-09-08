@@ -97,9 +97,26 @@ The planet is round. Nothing is hidden.</span></p>
 <div class="card">
   <a class="get" href="https://github.com/Aldmere/meridian-releases/releases/latest/download/Meridian-Pre-Alpha-Demo.zip">Download the zip</a>
   <a class="get alt" href="https://github.com/Aldmere/meridian-releases/releases/latest/download/Meridian-Pre-Alpha-Demo.exe">or the single .exe</a>
-  <p class="meta" style="margin-top:12px">Windows 10 or 11, 64-bit. About 110&nbsp;MB. No installer, no account, no launcher.<br>
+  <p class="meta" style="margin-top:12px"><strong id="ver">&nbsp;</strong>Windows 10 or 11, 64-bit. About 110&nbsp;MB. No installer, no account, no launcher.<br>
   These links always give you the newest build — <a href="https://github.com/Aldmere/meridian-releases/releases">every release</a>.</p>
 </div>
+
+<!-- WHICH BUILD IS THIS? The page said nothing, anywhere, which matters more here than on a finished game: when
+     somebody files a report the first question is always which build they were on, and the download page was the
+     one place that could answer it and did not.
+     Read from latest.json rather than written into the HTML, because deploy-site.sh already updates that file and
+     a number typed in two places is a number that goes stale in one of them. If the fetch fails the line simply
+     stays empty and the page is exactly as it was — a version label is not worth breaking a download button over. -->
+<script>
+(function () {
+  var el = document.getElementById('ver');
+  if (!el || !window.fetch) return;
+  fetch('latest.json', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (j) { if (j && j.version) el.textContent = 'Version ' + j.version + ' · '; })
+    .catch(function () { /* leave it blank: the download is the point, not the label */ });
+})();
+</script>
 
 <div class="card">
   <h3 style="margin-top:0">Is this safe?</h3>
