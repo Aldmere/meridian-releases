@@ -70,6 +70,10 @@
   kbd { background:var(--bg); border:1px solid var(--line); border-bottom-width:2px; border-radius:4px;
     padding:1px 6px; font:13px ui-monospace,Menlo,Consolas,monospace; }
   code { font:13px ui-monospace,Menlo,Consolas,monospace; background:var(--bg); padding:1px 5px; border-radius:4px; word-break:break-all; }
+  /* The duel command lines are long and must not push the page sideways on a phone: the block scrolls, the page does not.
+     word-break is reset because breaking a command line mid-flag makes it wrong to copy. */
+  pre { background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:12px 14px; overflow-x:auto; margin:14px 0; }
+  pre code { background:none; padding:0; word-break:normal; white-space:pre; }
   ul { padding-left:20px; } li { margin:5px 0; }
   .tier { display:inline-block; font-size:11px; color:var(--dim); border:1px solid var(--line); border-radius:20px; padding:0 7px; }
   footer { color:var(--dim); font-size:13px; margin-top:56px; border-top:1px solid var(--line); padding-top:20px; }
@@ -106,6 +110,10 @@ The planet is round. Nothing is hidden.</span></p>
   yet. We would rather tell you that than have you discover it and assume the worst.</p>
   <p class="meta">Every release publishes <a href="https://github.com/Aldmere/meridian-releases/releases">SHA-256 checksums</a> so you can prove
   the file is the one we built. In PowerShell: <code>Get-FileHash .\Meridian-Pre-Alpha-Demo.zip</code></p>
+  <p class="meta"><strong>The flight model is open source and we ship its source with every build.</strong> Meridian flies on JSBSim, which is
+  LGPL 2.1, so every release carries <code>jsbsim-source-506773ad.zip</code> &mdash; the exact commit our library was built from &mdash; and the
+  game&rsquo;s licence explicitly permits you to modify it, rebuild it, and replace our <code>JSBSim.dll</code> with your own. It is a loose file,
+  never embedded and never DRM-wrapped. You can check that the aeroplane is doing what we say it is doing.</p>
   <p class="meta">The game makes exactly one network request, at startup, to read a small public file and see whether a newer demo exists.
   Nothing else is sent, ever, and nothing at all is sent unless you press the report key yourself.</p>
 
@@ -149,7 +157,8 @@ The planet is round. Nothing is hidden.</span></p>
   <p class="meta">Walk the town on foot. Get into anything — a car, the bus, an aeroplane nobody is flying (<kbd>F</kbd> to climb in and out,
   <kbd>C</kbd> to walk to a door). Fly a scout yourself. Follow the fighting from a chase seat. Watch a nation feed itself, put a fitter through his guild and out the other side an engineer,
   build a bus in a factory and put an air force in the sky, and read why it did any of it.</p>
-  <p class="meta">What you cannot do yet: play the economy as a settler with your own workers, or play with anyone else. Both are next.</p>
+  <p class="meta">Set up a custom battle and fly it, or duel another person over the wire (command line for now &mdash; see below).
+  What you cannot do yet: play the economy as a settler with your own workers, or take the whole town online. Both are next.</p>
 </div>
 
 <p class="warn">It is <strong>pre-alpha</strong> and means it. Things are missing, wrong or plainly broken. That is what the demo is for, and a
@@ -302,6 +311,59 @@ town keeps going because the aerodrome holds.</p>
   forty kilometres — so the world falls away from you as it should, and haze takes what the curvature leaves.</li>
   <li><strong>Night is not black.</strong> Moonlight over a blue-grey ambient, because a night nobody can see in is a night nobody plays through.</li>
 </ul>
+
+<h2>Custom battles — you are flying inside two clicks</h2>
+
+<p>The first row on the front menu, and the fastest way to find out whether you like the flying before you decide
+whether you like the town. You set the fight and then you are in it:</p>
+
+<table>
+  <tr><td><strong>Your side, and theirs</strong></td><td>Any two of the eight founding nations. The colour you fly in is the nation's own livery, so the word on the menu and the paint on the machine are the same fact.</td></tr>
+  <tr><td><strong>Your machine</strong></td><td>Whatever the aerodrome actually carries. Not a separate list that can drift from the game — the same aeroplanes the town builds.</td></tr>
+  <tr><td><strong>How many of them</strong></td><td>One to six enemies.</td></tr>
+  <tr><td><strong>How many of you</strong></td><td>None to five friends. None is a fair choice and it is a hard one.</td></tr>
+  <tr><td><strong>How good they all are</strong></td><td>Novice, competent, veteran or ace — one dial, and it governs your side and theirs alike. A fight where your wingman is an ace and theirs is a boy is not the fight you chose.</td></tr>
+</table>
+
+<p class="meta">Skill is not a difficulty slider dressed up. It becomes a pilot in exactly one place in the code, so
+the sheet the menu shows you cannot disagree with the men who take off. An ace sees you further out, reacts in a
+fifth of a second where a novice needs nearly half, and holds a firing solution you would lose. He does not roll
+better than you — <strong>nothing in Meridian rolls</strong>. He is given more room and less time wasted, and what
+he does with it is flying.</p>
+
+<p>When one side is left standing you get the card: who shot whom, who never fired a round, and how she went down
+— and a collision says so rather than crediting a man who never pulled a trigger. From there, fly it again or go
+back and change the fight.</p>
+
+<p class="meta"><strong>Why this is on the front menu at all, honestly:</strong> a long unattended run proved you
+cannot reach an aeroplane in eighteen game days of ordinary play. The chain from the pithead through the furnace
+and the workshop to the aerodrome is longer than a fortnight. That is a real fault and it is on the list. Until it
+is fixed, the air should not be locked behind it.</p>
+
+<h2>Multiplayer — fighter duels</h2>
+
+<p>Two people, two machines, one sky. That is the whole of it for now, and narrowing it that far was deliberate:
+one aeroplane each, made to work properly, before a whole town made to work at all.</p>
+
+<p>The other man's aeroplane is <em>told</em>, not guessed at. His stick and rudder come down the wire and are
+written straight into a flight model on your machine as the very same values that move your own control surfaces
+— so his ailerons, his elevator and his propeller move on your screen through exactly the code that moves yours.
+Nothing is animated to look right.</p>
+
+<table>
+  <tr><td><strong>What it costs</strong></td><td>About 1.2 kB/s each way. A dial-up modem would carry it.</td></tr>
+  <tr><td><strong>What is sent</strong></td><td>Position and attitude twenty times a second on the fast, lossy channel; damage and parts coming off on the reliable one, because losing a wing is not something to drop.</td></tr>
+  <tr><td><strong>Third-party code</strong></td><td>None. Hand-written UDP with sequence numbers and acknowledgements, behind a seam a Steam transport can drop into later. Taking a library would have meant asserting its licence from memory, and this project has been bitten by exactly that once already.</td></tr>
+</table>
+
+<p class="warn"><strong>There is no button for it yet.</strong> The menu still shows multiplayer greyed out — the
+wire landed after the menu did. Today it is two copies of the game and two command lines:</p>
+
+<pre><code>Meridian.exe -meridianDuelHost 7777 -meridianName Tyrael
+Meridian.exe -meridianDuelJoin 192.168.1.20:7777 -meridianName Penrose</code></pre>
+
+<p class="meta">Direct IP. No matchmaking, no lobby, no NAT traversal — the same house, or you forward the port. A
+button is owed and is next. Not the town over the wire, not co-op: fighter duels.</p>
 
 <h2>You fly with them, and against them</h2>
 
