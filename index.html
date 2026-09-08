@@ -96,8 +96,8 @@ The planet is round. Nothing is hidden.</span></p>
 
 <div class="card">
   <a class="get" href="https://github.com/Aldmere/meridian-releases/releases/latest/download/Meridian-Pre-Alpha-Demo.zip">Download the zip</a>
-  <a class="get alt" href="https://github.com/Aldmere/meridian-releases/releases/latest/download/Meridian-Pre-Alpha-Demo.exe">or the single .exe</a>
-  <p class="meta" style="margin-top:12px"><strong id="ver">&nbsp;</strong>Windows 10 or 11, 64-bit. About 110&nbsp;MB. No installer, no account, no launcher.<br>
+  <a class="get alt" href="https://github.com/Aldmere/meridian-releases/releases/latest/download/Meridian-Pre-Alpha-Demo.exe">or the installer</a>
+  <p class="meta" style="margin-top:12px"><strong id="ver">&nbsp;</strong>Windows 10 or 11, 64-bit. About 123&nbsp;MB. No account, no launcher.<br>
   These links always give you the newest build — <a href="https://github.com/Aldmere/meridian-releases/releases">every release</a>.</p>
 </div>
 
@@ -121,10 +121,16 @@ The planet is round. Nothing is hidden.</span></p>
 <div class="card">
   <h3 style="margin-top:0">Is this safe?</h3>
   <p class="meta">Fair question, and the honest answer is worth more than a reassuring one.</p>
-  <p class="meta"><strong>The zip is the safer download</strong> — unzip it and run <code>Meridian.exe</code> inside. The single .exe is the same
-  build wrapped in a self-extractor for convenience; because it is not code-signed, <strong>Windows SmartScreen will show a blue warning</strong>
-  for it (More info → Run anyway). That warning is not evidence of anything except that a small studio has not bought a £300-a-year certificate
-  yet. We would rather tell you that than have you discover it and assume the worst.</p>
+  <p class="meta"><strong>The zip is the safer download</strong> — unzip it <em>into a folder of its own</em> and run <code>Meridian.exe</code>
+  inside. A game folder is nine items, because that is what a Windows build is: the exe, the engine, the assets, the runtime and the graphics
+  libraries. Unzipped straight onto a desktop, all nine land on the desktop.</p>
+  <p class="meta">The .exe is the same build wrapped in an <strong>installer</strong>: it asks where to put the game, always gives it a folder of
+  its own, writes a Desktop shortcut and a Start-menu entry, and registers a working uninstaller in Add/Remove Programs. It asks for <strong>no
+  administrator rights</strong> — it installs under your own user folder and touches nothing else. Your saved towns live in AppData and survive
+  an uninstall.</p>
+  <p class="meta">Because it is not code-signed, <strong>Windows SmartScreen will show a blue warning</strong> for it (More info → Run anyway).
+  That warning is not evidence of anything except that a small studio has not bought a £300-a-year certificate yet. We would rather tell you
+  that than have you discover it and assume the worst.</p>
   <p class="meta">Every release publishes <a href="https://github.com/Aldmere/meridian-releases/releases">SHA-256 checksums</a> so you can prove
   the file is the one we built. In PowerShell: <code>Get-FileHash .\Meridian-Pre-Alpha-Demo.zip</code></p>
   <p class="meta"><strong>The flight model is open source and we ship its source with every build.</strong> Meridian flies on JSBSim, which is
@@ -163,7 +169,7 @@ The planet is round. Nothing is hidden.</span></p>
 
       <p><strong>Or check it without running it at all.</strong> Upload the file to
       <a href="https://www.virustotal.com/">VirusTotal</a> — it will be scanned by about seventy engines in a minute. A couple of them flag most
-      unsigned self-extracting archives on principle; what you are looking for is whether anything reputable names an actual piece of malware.</p>
+      unsigned installers on principle; what you are looking for is whether anything reputable names an actual piece of malware.</p>
     </div>
   </details>
 </div>
