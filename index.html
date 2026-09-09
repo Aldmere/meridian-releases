@@ -530,6 +530,16 @@ nothing is taken down when a new one lands, so if a change breaks something for 
 sitting here.</p>
 
 <details style="margin-top:10px" open>
+  <summary style="cursor:pointer"><strong>0.7.3</strong> <span class="meta">&mdash; 9 September 2026 &mdash; the bomber was facing the wrong way</span></summary>
+  <ul>
+    <li><strong>The bomber flew standing on her nose.</strong> Her propeller sat behind her tail, so she was drawn with her roof pointing where she was going. The thrust was never wrong &mdash; the flight model pushes along her own nose and cannot do otherwise. It was the model that was turned.</li>
+    <li><strong>And her controls had never moved.</strong> With every part parented under the airframe, the game could not find her ailerons, elevator, rudder or propeller, so none of them had ever animated in any build.</li>
+    <li><strong>Wheels down, tail back</strong> is now a rule with a test behind it: every aircraft model in the game is measured against it, and a new aeroplane is covered the day its model lands.</li>
+    <li><strong>The aerodrome&rsquo;s gate works.</strong> Drive up and the sentry opens it, because the car is the nation&rsquo;s and so are you. A stranger would be turned away at the checkpoint.</li>
+  </ul>
+  <p class="meta"><a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.3/Meridian-Pre-Alpha-Demo.exe">installer</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.3/Meridian-Pre-Alpha-Demo.zip">zip</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.3/SHA256SUMS.txt">checksums</a></p>
+</details>
+<details style="margin-top:10px">
   <summary style="cursor:pointer"><strong>0.7.2</strong> <span class="meta">&mdash; 8 September 2026 &mdash; she stays where you put her, and there is a tutorial</span></summary>
   <ul>
     <li><strong>The aeroplanes were tail-heavy and now they are not.</strong> The centre of gravity sat behind the point the lift acts through, which is a nose-up couple that never goes away. Hands off with no trim at all, the nose used to wander 46&deg; in half a minute; it wanders 19&deg; now, and the static margin went from 3.3% to 10%.</li>
