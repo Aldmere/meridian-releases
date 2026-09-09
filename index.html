@@ -530,6 +530,16 @@ nothing is taken down when a new one lands, so if a change breaks something for 
 sitting here.</p>
 
 <details style="margin-top:10px" open>
+  <summary style="cursor:pointer"><strong>0.7.6</strong> <span class="meta">&mdash; 9 September 2026 &mdash; the wing-leveller gave up where it was needed</span></summary>
+  <ul>
+    <li><strong>Open the throttle and the Scout goes up, instead of onto her side.</strong> 0.7.5&rsquo;s new wing-leveller stood down past ten degrees of bank &mdash; which is exactly where it was needed. The correction a single big propeller needs is not a constant; it grows with power. Past about 0.85 throttle she rolled through the limit, the automatic let go, and she went over: <strong>92 degrees of bank</strong> with nobody touching the stick. Now 0.2.</li>
+    <li><strong>The stand-down is the pilot&rsquo;s hand on the stick</strong>, not the bank angle, and the tab answers roll rate as well as bank so it catches a wing as it starts to drop. The Bomber was never affected, which is how this hid.</li>
+    <li><strong>The test fails now instead of reporting.</strong> The cruise sweep had printed the evidence for three sessions and passed every time because nothing asserted on it.</li>
+    <li>Everything from 0.7.5 stands: the aeroplanes hold height, an airborne start is trimmed by the flight model itself, there are three trim tabs, and the king&rsquo;s drive goes through a gate that opens.</li>
+  </ul>
+  <p class="meta"><a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.6/Meridian-Pre-Alpha-Demo.exe">installer</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.6/Meridian-Pre-Alpha-Demo.zip">zip</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.6/SHA256SUMS.txt">checksums</a></p>
+</details>
+<details style="margin-top:10px">
   <summary style="cursor:pointer"><strong>0.7.5</strong> <span class="meta">&mdash; 9 September 2026 &mdash; two hundredths of aileron</span></summary>
   <ul>
     <li><strong>The aeroplanes hold height.</strong> Nought feet lost in forty-five seconds, hands off, both machines. The last build named the propeller as the suspect and that was wrong: run at last in the flight model&rsquo;s own console binary, the Scout trims level at every speed from 50 to 110 knots and the Bomber from 50 to 90, thrust exactly equal to drag.</li>
