@@ -530,12 +530,23 @@ nothing is taken down when a new one lands, so if a change breaks something for 
 sitting here.</p>
 
 <details style="margin-top:10px" open>
+  <summary style="cursor:pointer"><strong>0.7.5</strong> <span class="meta">&mdash; 9 September 2026 &mdash; two hundredths of aileron</span></summary>
+  <ul>
+    <li><strong>The aeroplanes hold height.</strong> Nought feet lost in forty-five seconds, hands off, both machines. The last build named the propeller as the suspect and that was wrong: run at last in the flight model&rsquo;s own console binary, the Scout trims level at every speed from 50 to 110 knots and the Bomber from 50 to 90, thrust exactly equal to drag.</li>
+    <li><strong>It was two hundredths of aileron.</strong> One big propeller turning one way puts a standing torque the other way at every power setting. Holding the wings level against it takes a permanent trace of aileron &mdash; and the game wrote the stick to centre sixty times a second and threw it away. She rolled off to <strong>39 degrees of bank</strong> and spiralled from 3,000 feet to 844 in a minute, with the elevator sitting at exactly the same value as in the run that held perfectly. A wing that drops takes the nose with it, which is what every &ldquo;nose up&rdquo; and &ldquo;won&rsquo;t hold height&rdquo; report actually was.</li>
+    <li><strong>An airborne start is now a trimmed start.</strong> The game asks the flight model to solve level flight and takes the answer &mdash; throttle and all three tabs. The old fixed throttle was the level setting for 78 knots while every start hands you 85, so you began every flight already going down.</li>
+    <li><strong>She has a third trim tab.</strong> Aileron trim on <code>Shift + 4 / 6</code>, on the same <code>T</code> automatic as the other two. It stands down past ten degrees of bank so it never fights a turn you meant.</li>
+    <li><strong>The magneto switch was wired to nothing</strong> &mdash; the property it wrote does not exist in the flight model, so stopping an engine never stopped one. And the king&rsquo;s drive could be sent to park behind an aeroplane that was three thousand feet up; it now takes only a machine standing on the field.</li>
+  </ul>
+  <p class="meta"><a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.5/Meridian-Pre-Alpha-Demo.exe">installer</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.5/Meridian-Pre-Alpha-Demo.zip">zip</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.5/SHA256SUMS.txt">checksums</a></p>
+</details>
+<details style="margin-top:10px">
   <summary style="cursor:pointer"><strong>0.7.4</strong> <span class="meta">&mdash; 9 September 2026 &mdash; you can walk about inside her</span></summary>
   <ul>
     <li><strong>A man can walk the length of a flying aeroplane.</strong> Measured: 7.75 m up the fuselage while she covered 248 m, his feet staying within 2 cm of the deck. The obvious way &mdash; a character controller &mdash; does not work at all, because she moves two thirds of a metre every physics step and the controller pushes back against every one of them. So the inside of an aeroplane uses no physics engine: a hull is a volume we draw ourselves, and a man&rsquo;s place aboard is a coordinate in <em>her</em> frame.</li>
     <li><strong>And she has an inside to walk in.</strong> Two decks drawn to her real hull curves so nothing touches her skin: a main deck the length of her, a flight deck forward with two seats and a panel coaming, the stairs between them, the wing-spar bulkheads with a coaming underfoot you step over, berths for a wounded man, a boarding door hinged on its forward jamb, and a tail turret with a ring in the deck and a seat under it.</li>
     <li><strong>Please take this instead of 0.7.2 or 0.7.3.</strong> Those two had a personal name inside the game&rsquo;s data files &mdash; not visible in play, but present in the download. Their files have been removed.</li>
-    <li><strong>Still wrong, and known:</strong> the aeroplanes cannot hold height. Thrust falls short of drag at every throttle setting, so she descends whatever you do. The propeller is the suspect.</li>
+    <li><strong>Was wrong in this build, fixed in 0.7.5:</strong> the aeroplanes could not hold height. The propeller named here as the suspect was innocent &mdash; it was an uncorrected roll. See 0.7.5.</li>
   </ul>
   <p class="meta"><a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.4/Meridian-Pre-Alpha-Demo.exe">installer</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.4/Meridian-Pre-Alpha-Demo.zip">zip</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.4/SHA256SUMS.txt">checksums</a></p>
 </details>
