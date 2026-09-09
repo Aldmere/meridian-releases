@@ -98,7 +98,7 @@ The planet is round. Nothing is hidden.</span></p>
   <a class="get" href="https://github.com/Aldmere/meridian-releases/releases/latest/download/Meridian-Pre-Alpha-Demo.zip">Download the zip</a>
   <a class="get alt" href="https://github.com/Aldmere/meridian-releases/releases/latest/download/Meridian-Pre-Alpha-Demo.exe">or the installer</a>
   <p class="meta" style="margin-top:12px"><strong id="ver">&nbsp;</strong>Windows 10 or 11, 64-bit. About 123&nbsp;MB. No account, no launcher.<br>
-  These links always give you the newest build — <a href="https://github.com/Aldmere/meridian-releases/releases">every release</a>.</p>
+  These links always give you the newest build — <a href="#versions">every version</a>.</p>
 </div>
 
 <!-- WHICH BUILD IS THIS? The page said nothing, anywhere, which matters more here than on a finished game: when
@@ -131,7 +131,7 @@ The planet is round. Nothing is hidden.</span></p>
   <p class="meta">Because it is not code-signed, <strong>Windows SmartScreen will show a blue warning</strong> for it (More info → Run anyway).
   That warning is not evidence of anything except that a small studio has not bought a £300-a-year certificate yet. We would rather tell you
   that than have you discover it and assume the worst.</p>
-  <p class="meta">Every release publishes <a href="https://github.com/Aldmere/meridian-releases/releases">SHA-256 checksums</a> so you can prove
+  <p class="meta">Every release publishes <a href="#versions">SHA-256 checksums</a> so you can prove
   the file is the one we built. In PowerShell: <code>Get-FileHash .\Meridian-Pre-Alpha-Demo.zip</code></p>
   <p class="meta"><strong>The flight model is open source and we ship its source with every build.</strong> Meridian flies on JSBSim, which is
   LGPL 2.1, so every release carries <code>jsbsim-source-506773ad.zip</code> &mdash; the exact commit our library was built from &mdash; and the
@@ -513,13 +513,66 @@ doing, how fast, and <strong>how long since anything last moved</strong> — whi
       <td>Designed and begun. The groundwork that keeps a client from quietly running a second copy of the world is in and enforced; the networking is not.</td></tr>
   <tr><td><strong>Play as a settler</strong> — your own land, your own workers, your own books, selling to the state alongside everyone else</td>
       <td>The economy it runs on is built and running; the player's side of it is not</td></tr>
-  <tr><td><strong>A tutorial</strong></td><td>Not started</td></tr>
+  <tr><td><strong>A tutorial</strong> &mdash; the drive to the aerodrome, then the flight out</td>
+      <td>Act one is in 0.7.2: you drive the wounded king to the field, through the gate the sentry opens for you, and
+          park beside the machine. Every step signs itself off from the world rather than from a button. The flight out
+          is next, and wants an aeroplane with an inside.</td></tr>
   <tr><td><strong>The rest of the manoeuvres</strong> — Side-Slip, Flat Scissors, Cuban-8, and for later aircraft the Lufbery Circle, Boom-and-Zoom, the yo-yos</td>
       <td>Four of nine flown</td></tr>
   <tr><td><strong>The Warden</strong> — a heavy fighter with a rear gunner</td><td>Not started; turrets do not exist yet</td></tr>
   <tr><td><strong>A second aerodrome</strong>, hangars built on demand, rescue for downed pilots</td><td>Planned</td></tr>
   <tr><td><strong>Interiors</strong> — the capital, the air-force terminal, a ready room</td><td>Planned</td></tr>
 </table>
+
+<h2 id="versions">Every version so far</h2>
+<p>Newest first, and all of it here rather than somewhere else. Older builds stay up and stay downloadable &mdash;
+nothing is taken down when a new one lands, so if a change breaks something for you, the build before it is still
+sitting here.</p>
+
+<details style="margin-top:10px" open>
+  <summary style="cursor:pointer"><strong>0.7.2</strong> <span class="meta">&mdash; 8 September 2026 &mdash; she stays where you put her, and there is a tutorial</span></summary>
+  <ul>
+    <li><strong>The aeroplanes were tail-heavy and now they are not.</strong> The centre of gravity sat behind the point the lift acts through, which is a nose-up couple that never goes away. Hands off with no trim at all, the nose used to wander 46&deg; in half a minute; it wanders 19&deg; now, and the static margin went from 3.3% to 10%.</li>
+    <li><strong>A trim tab, and an automatic one.</strong> Both aeroplanes have had the tab in their flight model since the day they were written and nothing had ever moved it. <kbd>NumPad 7</kbd>/<kbd>1</kbd> is the wheel; the automatic follows the stick while you hold it and holds the attitude you left her at when you let go. <kbd>T</kbd> turns it off.</li>
+    <li><strong>A rudder trim</strong> on <kbd>NumPad 0</kbd>/<kbd>.</kbd> that flies the ball to the middle &mdash; worst sideslip over half a minute went from 1.8&deg; by hand to 0.2&deg;.</li>
+    <li><strong>An artificial horizon</strong>, which is an anachronism on a 1916 panel and went in anyway: you have no peripheral vision and no seat, and without it you cannot tell a climb from a stall.</li>
+    <li><strong>The altimeter was never wrong</strong> &mdash; &ldquo;42850 ft&rdquo; was 2,850 with the dial&rsquo;s own numerals printing through the figure. It also shows height above the <em>ground</em> now, which is the number that decides whether you live.</li>
+    <li><strong>The flying lesson was teaching the wrong key.</strong> Three steps told you to pull back with <kbd>NUMPAD 8</kbd>, and 8 is nose <em>down</em>. Following it exactly would have put the nose into the ground.</li>
+    <li><strong>The tutorial has a first act:</strong> the capital is burning, the king is wounded in the back of your car, and the aerodrome is across the valley. Drive him there, through the gate the sentry opens because the car is the nation&rsquo;s, and park beside the machine. Every step signs itself off from the world &mdash; the distance you covered, the gate&rsquo;s own open flag, whether you actually stopped. No timers, no &ldquo;press X to continue&rdquo;.</li>
+    <li><strong>Doors and footsteps make a sound</strong>, generated rather than sampled, and deliberately quiet.</li>
+    <li><strong>The front door tells you which build you are running</strong> &mdash; version, build time and commit &mdash; with the same stamp down the edge of the screen, and a button to check for a newer one.</li>
+  </ul>
+  <p class="meta"><a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.2/Meridian-Pre-Alpha-Demo.exe">installer</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.2/Meridian-Pre-Alpha-Demo.zip">zip</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.2/SHA256SUMS.txt">checksums</a></p>
+</details>
+<details style="margin-top:10px">
+  <summary style="cursor:pointer"><strong>0.7.1</strong> <span class="meta">&mdash; 8 September 2026 &mdash; a fix release, an hour after 0.7.0</span></summary>
+  <ul>
+    <li><strong>The title screen&rsquo;s camera went flying with you.</strong> The menu&rsquo;s camera is deliberately cinematic &mdash; it sits below the machine looking up at her &mdash; and it was not being handed back when you took off. So it kept circling you, showed you your own belly, and swallowed <kbd>X</kbd> and <kbd>Tab</kbd>.</li>
+    <li><strong>Two instruments were drawn on top of each other.</strong> The awareness card overlapped the strain meter by a strip 14 px wide and 71 tall. Both were checked on their own, which is exactly how that happens.</li>
+    <li><strong>Her controls went on the screen.</strong> The strip along the top had always named the world&rsquo;s keys and never the aeroplane&rsquo;s: you could read how to open a menu and not how to open the throttle.</li>
+  </ul>
+  <p class="meta"><a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.1/Meridian-Pre-Alpha-Demo.exe">installer</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.1/Meridian-Pre-Alpha-Demo.zip">zip</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.1/SHA256SUMS.txt">checksums</a></p>
+</details>
+<details style="margin-top:10px">
+  <summary style="cursor:pointer"><strong>0.7.0</strong> <span class="meta">&mdash; 8 September 2026 &mdash; the land was pink, and only in the exe</span></summary>
+  <ul>
+    <li><strong>The hills were the pink.</strong> Magenta is what Unity draws when it cannot resolve a shader, and the terrain is built in code so nothing in any scene ever named the shader it needs. It was in the shipped build and in no Editor run, which is why nobody caught it.</li>
+    <li><strong>The fog had never once been in a build</strong> for the same class of reason, so the whole horizon design was dead in the exe and there was nothing in any log to say so.</li>
+    <li>A throttle and mixture quadrant, a direction indicator and a gunsight on the panel.</li>
+    <li><strong>A stress meter</strong> that gives you about a second before a wing leaves, with the headroom lettered in g and a ghost mark running ahead of the load at the rate you are pulling.</li>
+  </ul>
+  <p class="meta"><a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.0/Meridian-Pre-Alpha-Demo.exe">installer</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.0/Meridian-Pre-Alpha-Demo.zip">zip</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.7.0/SHA256SUMS.txt">checksums</a></p>
+</details>
+<details style="margin-top:10px">
+  <summary style="cursor:pointer"><strong>0.6.0</strong> <span class="meta">&mdash; 8 September 2026 &mdash; the town fills up</span></summary>
+  <ul>
+    <li>Every citizen gets a home, a habit and a clock.</li>
+    <li><strong>Careers:</strong> six lines, four rungs each.</li>
+    <li>The engine had been clicking once every two seconds &mdash; a loop point that was not silent.</li>
+  </ul>
+  <p class="meta"><a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.6.0/Meridian-Pre-Alpha-Demo.exe">installer</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.6.0/Meridian-Pre-Alpha-Demo.zip">zip</a> &middot; <a href="https://github.com/Aldmere/meridian-releases/releases/download/v0.6.0/SHA256SUMS.txt">checksums</a></p>
+</details>
+<p class="meta">Every build is unsigned, so SmartScreen will warn about the installer; the zip raises no warning at all if you would rather have that. The checksums beside each build let you prove that what you downloaded is what was built, and the flight model&rsquo;s source ships with every one of them because it is LGPL and you are entitled to it.</p>
 
 <h2>Known to be wrong, today</h2>
 <ul>
